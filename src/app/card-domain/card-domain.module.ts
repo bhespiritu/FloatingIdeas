@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {CardDomainComponent} from "./card-domain.component";
 import {MatCardModule} from "@angular/material/card";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 
@@ -10,6 +11,7 @@ import {MatCardModule} from "@angular/material/card";
   imports: [
     CommonModule,
     MatCardModule,
+    DragDropModule,
   ],
   exports: [
     CardDomainComponent
