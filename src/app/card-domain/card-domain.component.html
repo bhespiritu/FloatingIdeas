@@ -1,6 +1,22 @@
-<div class="card-domain mat-elevation-z0" cdkDropListGroup>
-  <div class="card-stream mat-elevation-z1" cdkDropList>
-    <app-task-card class="mat-elevation-z4" cdkDrag> BASED </app-task-card>
+<div class="card-domain mat-elevation-z0">
+  <div
+    #streamList="cdkDropList"
+    [cdkDropListData]="activeStreamCards"
+    [cdkDropListConnectedTo]="[shelfList]"
+    class="card-stream mat-elevation-z1"
+    cdkDropList
+    (cdkDropListDropped)="drop($event)"
+  >
+    <app-task-card class="mat-elevation-z4">
+      <app-task [taskData]="{ header: 'TASK', _id: 'FOO' }"></app-task>
+    </app-task-card>
   </div>
-  <div class="card-shelf" cdkDropList></div>
+  <div
+    #shelfList="cdkDropList"
+    [cdkDropListData]="shelfCards"
+    [cdkDropListConnectedTo]="[streamList]"
+    class="card-shelf"
+    cdkDropList
+    (cdkDropListDropped)="drop($event)"
+  ></div>
 </div>

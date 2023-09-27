@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragStart } from '@angular/cdk/drag-drop';
+import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'app-task-card',
@@ -7,6 +8,11 @@ import { CdkDragDrop, CdkDragStart } from '@angular/cdk/drag-drop';
   styleUrls: ['./task-card.component.scss'],
 })
 export class TaskCardComponent {
+  static nextId = 0;
+  @HostBinding() id = 'task-card-' + (TaskCardComponent.nextId++).toString();
+
+  @ViewChild('task') task?: TaskComponent;
+
   x = 50;
   y = 50;
 
