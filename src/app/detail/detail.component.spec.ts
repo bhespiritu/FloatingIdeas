@@ -12,7 +12,7 @@ describe('DetailComponent', () => {
   beforeEach(waitForAsync(() => {
     void TestBed.configureTestingModule({
       declarations: [DetailComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule]
+      imports: [TranslateModule.forRoot(), RouterTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DetailComponent);
@@ -27,7 +27,7 @@ describe('DetailComponent', () => {
   it('should render title in a h1 tag', waitForAsync(() => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain(
-      'PAGES.DETAIL.TITLE'
+      'PAGES.DETAIL.TITLE',
     );
   }));
 });

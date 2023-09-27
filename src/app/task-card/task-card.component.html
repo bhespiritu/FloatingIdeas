@@ -1,3 +1,11 @@
-<mat-card class="task-card" (cdkDragStarted)="dragStarted($event)" (cdkDragDropped)="dragMoved($event)" [style.left.px]="x" [style.top.px]="y" cdkDropListLockAxis="null" cdkDrag>
-    <ng-content></ng-content>
+<mat-card
+  class="task-card"
+  (cdkDragStarted)="dragStarted($event)"
+  (cdkDragDropped)="dragMoved($event)"
+  [style.left.px]="x"
+  [style.top.px]="y"
+  cdkDropListLockAxis="null"
+  cdkDrag
+>
+  <ng-content></ng-content>
 </mat-card>

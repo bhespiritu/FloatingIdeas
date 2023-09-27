@@ -9,7 +9,7 @@ describe('AppComponent', () => {
     void TestBed.configureTestingModule({
       declarations: [AppComponent],
       providers: [ElectronService],
-      imports: [RouterTestingModule, TranslateModule.forRoot()]
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
     }).compileComponents();
   }));
 
