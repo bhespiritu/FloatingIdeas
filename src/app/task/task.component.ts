@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { TaskData } from '../../../models/task-data';
 
 @Component({
@@ -6,7 +6,7 @@ import { TaskData } from '../../../models/task-data';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
 })
-export class TaskComponent {
+export class TaskComponent{
   @Input()
   public taskData?: TaskData;
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {
-  CdkDragDrop,
+  CdkDragDrop, CdkDragEnter,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
@@ -30,5 +30,9 @@ export class CardDomainComponent {
       );
     }
     console.log([this.activeStreamCards, '--', this.shelfCards]);
+  }
+
+  shelfEnter($event: CdkDragEnter<string>) {
+    console.debug(["wuh?", $event])
   }
 }

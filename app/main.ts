@@ -1,4 +1,4 @@
-import {app, BrowserWindow, screen} from 'electron';
+import {app, BrowserWindow, screen, ipcMain} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -75,6 +75,12 @@ try {
     if (win === null) {
       createWindow();
     }
+  });
+
+  ipcMain.handle('get-model', async (event, modelType, modelId) => {
+    // Retrieve model based on the argument
+    //const model = await getModel(arg); // replace with actual implementation
+    return null;//model;
   });
 
 } catch (e) {

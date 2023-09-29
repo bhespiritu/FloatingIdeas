@@ -15,6 +15,7 @@
     #shelfList="cdkDropList"
     [cdkDropListData]="shelfCards"
     [cdkDropListConnectedTo]="[streamList]"
+    (cdkDropListEntered)="shelfEnter($event)"
     class="card-shelf"
     cdkDropList
     (cdkDropListDropped)="drop($event)"
