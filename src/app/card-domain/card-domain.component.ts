@@ -4,6 +4,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import {IdeaData} from "../../../models/idea-data";
 
 @Component({
   selector: 'app-card-domain',
@@ -13,6 +14,11 @@ import {
 export class CardDomainComponent {
   activeStreamCards = [''];
   shelfCards = [''];
+
+  add(idea : IdeaData)
+  {
+
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

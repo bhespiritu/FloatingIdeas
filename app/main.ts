@@ -1,10 +1,13 @@
 import {app, BrowserWindow, screen, ipcMain} from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import {ModelStorage} from "./model-storage";
 
 let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
+
+let modelStorage : ModelStorage
 
 function createWindow(): BrowserWindow {
 
@@ -79,8 +82,8 @@ try {
 
   ipcMain.handle('get-model', async (event, modelType, modelId) => {
     // Retrieve model based on the argument
-    //const model = await getModel(arg); // replace with actual implementation
-    return null;//model;
+    const model = await modelStorage.requestModel(modelType,modelId);
+    return model;//model;
   });
 
 } catch (e) {

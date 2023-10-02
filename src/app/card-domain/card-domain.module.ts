@@ -4,7 +4,7 @@ import { CardDomainComponent } from './card-domain.component';
 import { MatCardModule } from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskCardModule } from '../task-card/task-card.module';
-import { TaskModule } from '../task/task.module';
+import { IdeaModule } from '../task/idea.module';
 
 @NgModule({
   declarations: [CardDomainComponent],
@@ -13,7 +13,7 @@ import { TaskModule } from '../task/task.module';
     MatCardModule,
     DragDropModule,
     TaskCardModule,
-    TaskModule,
+    IdeaModule,
   ],
   exports: [CardDomainComponent],
 })

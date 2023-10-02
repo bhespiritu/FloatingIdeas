@@ -1,11 +1,11 @@
 
-export class TaskData {
+export class IdeaData {
   static nextId = 0;
   private _id: string;
   public header = "Task";
 
   constructor(taskId?: string) {
-    this._id = taskId || "generated-" + (TaskData.nextId++).toString();
+    this._id = taskId || "generated-" + (IdeaData.nextId++).toString();
   }
 
 
