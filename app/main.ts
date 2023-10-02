@@ -81,9 +81,11 @@ try {
   });
 
   ipcMain.handle('get-model', async (event, modelType, modelId) => {
-    // Retrieve model based on the argument
-    const model = await modelStorage.requestModel(modelType,modelId);
-    return model;//model;
+    return modelStorage.getModel(modelType,modelId);
+  });
+
+  ipcMain.handle('random-model-id', async (event, modelType) => {
+    return modelStorage.requestRandomModel(modelType);
   });
 
 } catch (e) {

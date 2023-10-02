@@ -15,9 +15,9 @@ export class CardDomainComponent {
   activeStreamCards = [''];
   shelfCards = [''];
 
-  add(idea : IdeaData)
+  add(ideaId : string)
   {
-
+    this.activeStreamCards.push(ideaId);
   }
 
   drop(event: CdkDragDrop<string[]>) {

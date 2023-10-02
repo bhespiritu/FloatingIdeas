@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {CardDomainComponent} from "../card-domain/card-domain.component";
-import {interval, Subscription} from "rxjs";
+import {from, interval, mergeMap, range, Subscription, take, toArray} from "rxjs";
 import {IdeaStateService} from "../task/idea-state.service";
 import {IdeaData} from "../../../models/idea-data";
 
@@ -19,14 +19,15 @@ export class HomeComponent implements OnInit, OnDestroy{
   ideaSubscription? : Subscription;
 
   constructor(private router: Router,
-              private taskService: IdeaStateService) {
+              private ideaService: IdeaStateService) {
 
   }
 
   startIdeaRequests(): void {
-    this.ideaSubscription = interval(1000)
-      .pipe(()=>this.taskService.requestTaskState("-"))
-      .subscribe((idea)=>this.addIdeaCard(idea))
+    this.ideaSubscription = interval(1000).pipe(
+      // mergeMap(()=>range(0,this.ideaRequestNum).pipe(()=>from(this.ideaService.requestRandomIdeaId()))),
+      //
+    )
   }
 
   stopIdeaRequests(): void {
@@ -36,10 +37,10 @@ export class HomeComponent implements OnInit, OnDestroy{
     }
   }
 
-  addIdeaCard(idea : IdeaData): void {
+  addIdeaCard(ideaId : string): void {
     if(this.cardDomain)
     {
-      this.cardDomain.add(idea)
+      this.cardDomain.add(ideaId)
     }
   }
 
