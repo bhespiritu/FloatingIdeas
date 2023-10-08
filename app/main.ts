@@ -1,16 +1,15 @@
-import {app, BrowserWindow, screen, ipcMain} from 'electron';
+import { app, BrowserWindow, screen, ipcMain } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
-import {ModelStorage} from "./model-storage";
+import {FileModelStorage, ModelStorage} from './model-storage';
 
 let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
-  serve = args.some(val => val === '--serve');
+  serve = args.some((val) => val === '--serve');
 
-let modelStorage : ModelStorage
+let modelStorage: ModelStorage = new FileModelStorage();
 
 function createWindow(): BrowserWindow {
-
   const size = screen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
@@ -21,10 +20,12 @@ function createWindow(): BrowserWindow {
     height: size.height,
     webPreferences: {
       nodeIntegration: true,
-      allowRunningInsecureContent: (serve),
+      allowRunningInsecureContent: serve,
       contextIsolation: false,
     },
   });
+
+  win.webContents.openDevTools()
 
   if (serve) {
     const debug = require('electron-debug');
@@ -37,7 +38,7 @@ function createWindow(): BrowserWindow {
     let pathIndex = './index.html';
 
     if (fs.existsSync(path.join(__dirname, '../dist/index.html'))) {
-       // Path when running electron in local folder
+      // Path when running electron in local folder
       pathIndex = '../dist/index.html';
     }
 
@@ -81,13 +82,14 @@ try {
   });
 
   ipcMain.handle('get-model', async (event, modelType, modelId) => {
-    return modelStorage.getModel(modelType,modelId);
+    return modelStorage.getModel(modelType, modelId);
   });
 
   ipcMain.handle('random-model-id', async (event, modelType) => {
-    return modelStorage.requestRandomModel(modelType);
+    let promise = modelStorage.requestRandomModel(modelType);
+    console.log(["sending random-model-id ",promise])
+    return promise;
   });
-
 } catch (e) {
   // Catch Error
   // throw e;

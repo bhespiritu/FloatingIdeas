@@ -1,33 +1,48 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {CardDomainComponent} from "../card-domain/card-domain.component";
-import {from, interval, mergeMap, range, Subscription, take, toArray} from "rxjs";
-import {IdeaStateService} from "../task/idea-state.service";
-import {IdeaData} from "../../../models/idea-data";
+import { CardDomainComponent } from '../card-domain/card-domain.component';
+import {
+  from,
+  interval,
+  map,
+  mergeMap,
+  Observable,
+  Subscription,
+  take,
+  toArray,
+} from 'rxjs';
+import { IdeaStateService } from '../idea/idea-state.service';
+import { IdeaData } from '../../../models/idea-data';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy{
-  @ViewChild("card-domain")
-  cardDomain?: CardDomainComponent
+export class HomeComponent implements OnInit, OnDestroy {
+  @ViewChild('cardDomain')
+  cardDomain?: CardDomainComponent;
 
   ideaRequestNum = 1;
 
-  ideaSubscription? : Subscription;
+  ideaSubscription?: Subscription;
 
-  constructor(private router: Router,
-              private ideaService: IdeaStateService) {
+  constructor(
+    private router: Router,
+    private ideaService: IdeaStateService,
+  ) {}
 
+  buildIdeaRequest(): Observable<string[]> {
+    return from(Array(this.ideaRequestNum).keys()).pipe(
+      () => from(this.ideaService.requestRandomIdeaId()),
+      toArray(),
+    );
   }
 
   startIdeaRequests(): void {
-    this.ideaSubscription = interval(1000).pipe(
-      // mergeMap(()=>range(0,this.ideaRequestNum).pipe(()=>from(this.ideaService.requestRandomIdeaId()))),
-      //
-    )
+    this.ideaSubscription = from([1])
+      .pipe(mergeMap(this.buildIdeaRequest.bind(this)))
+      .subscribe((ideaIds) => ideaIds.forEach(this.addIdeaCard.bind(this)));
   }
 
   stopIdeaRequests(): void {
@@ -37,16 +52,17 @@ export class HomeComponent implements OnInit, OnDestroy{
     }
   }
 
-  addIdeaCard(ideaId : string): void {
-    if(this.cardDomain)
-    {
-      this.cardDomain.add(ideaId)
+  addIdeaCard(ideaId: string): void {
+    console.log("Recieved "+ideaId)
+    console.log(["Sending To ",this.cardDomain])
+    if (this.cardDomain) {
+      this.cardDomain.addIdeaIdEvent.next(ideaId);
     }
   }
 
-
   ngOnInit(): void {
     console.log('HomeComponent INIT');
+    this.startIdeaRequests();
   }
 
   ngOnDestroy() {

@@ -1,6 +1,6 @@
 import { Component, HostBinding, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragStart } from '@angular/cdk/drag-drop';
-import { IdeaCardComponent } from '../task/idea-card.component';
+import { IdeaCardComponent } from '../idea/idea-card.component';
 
 @Component({
   selector: 'app-task-card',

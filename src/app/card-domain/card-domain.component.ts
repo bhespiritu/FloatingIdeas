@@ -1,23 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  CdkDragDrop, CdkDragEnter,
+  CdkDragDrop,
+  CdkDragEnter,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import {IdeaData} from "../../../models/idea-data";
+import { IdeaData } from '../../../models/idea-data';
+import { IdeaStateService } from '../idea/idea-state.service';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-card-domain',
   templateUrl: './card-domain.component.html',
   styleUrls: ['./card-domain.component.scss'],
 })
-export class CardDomainComponent {
-  activeStreamCards = [''];
-  shelfCards = [''];
+export class CardDomainComponent implements OnInit, OnDestroy {
+  activeStreamCards:string[]= [];
+  shelfCards:string[] = [];
 
-  add(ideaId : string)
-  {
-    this.activeStreamCards.push(ideaId);
+  public addIdeaIdEvent: Subject<string>;
+
+  private sub?: Subscription;
+
+  constructor(public ideaService: IdeaStateService) {
+    this.addIdeaIdEvent = new Subject<string>();
+  }
+
+  ngOnInit(): void {
+    this.sub = this.addIdeaIdEvent.subscribe((id) =>{
+        console.log("recieved ID " + id)
+        this.activeStreamCards.push(id);
+    }
+
+
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.addIdeaIdEvent.complete();
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -38,7 +58,7 @@ export class CardDomainComponent {
     console.log([this.activeStreamCards, '--', this.shelfCards]);
   }
 
-  shelfEnter($event: CdkDragEnter<string>) {
-    console.debug(["wuh?", $event])
+  shelfEnter($event: CdkDragEnter<string[]>) {
+    console.debug(['wuh?', $event]);
   }
 }

@@ -1,18 +1,19 @@
+import {IdeaData} from "../models/idea-data";
 
-export interface ModelStorage{
-  getModel(modelName : string, modelId: string) : Promise<any>;
+export interface ModelStorage {
+  getModel(modelName: string, modelId: string): Promise<any>;
 
   requestRandomModel(modelType: string): Promise<any>;
 }
 
-export class FileModelStorage implements ModelStorage
-{
+export class FileModelStorage implements ModelStorage {
   getModel(modelName: string, modelId: string): Promise<any> {
-    return Promise.resolve(undefined);
+    let idea = new IdeaData(modelId);
+    idea.header = "FOO BAR"
+    return Promise.resolve(idea);
   }
 
   requestRandomModel(modelType: string): Promise<string> {
-    return Promise.resolve("RANDOM PLACEHOLDER");
+    return Promise.resolve('RANDOM PLACEHOLDER');
   }
-
 }
